@@ -73,7 +73,7 @@ test:
 	@$(PYDEV) coverage html
 
 quick-test:
-	@$(PYDEV) nosetests -v --pdb --pdb-failures
+	@$(PYDEV) bash -c "pip install . && nosetests -v --pdb --pdb-failures"
 
 dist-test: build
 	@$(PYDEV) dist-test $(VERSION)

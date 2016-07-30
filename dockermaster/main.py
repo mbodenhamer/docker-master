@@ -10,7 +10,7 @@ import docker
 client = docker.Client(base_url='unix://var/run/docker.sock')
 
 # Ignore the ugly monkeypatch...
-# Will be removed in the next release
+# Will be removed in 0.1
 if client._version > '1.21':
     client._version = '1.21'
 

@@ -49,7 +49,6 @@ build: check
 # Documentation
 
 docs:
-	@$(PYDEV) sphinx-apidoc -f -o docs/ ${PACKAGE}/
 	@$(PYDEV) make -C docs html
 
 view:

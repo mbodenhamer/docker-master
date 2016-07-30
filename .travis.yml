@@ -1,3 +1,15 @@
+sudo: required
+services:
+  - docker
+
+env:
+    global:
+        - DOCKER_VERSION=1.9.1-0~trusty
+
+before_install:
+  - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=${DOCKER_VERSION}
+  - docker version
+
 language: python
 python:
   - "2.7"

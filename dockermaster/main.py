@@ -128,7 +128,12 @@ class Container(object):
         return ret
 
     def _poll(self, cname, port):
+        # Make it work ...
+        ver = client._version
+        client._version = '1.21'
         caddr = client.inspect_container(cname)['NetworkSettings']['IPAddress']
+        client._version = ver
+
         sock = socket.socket()
         while True:
             try:
@@ -460,8 +465,7 @@ def main(*args):
         rmvols(opts)
         sys.exit(0)
 
-    config = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
-                          'master.yml')
+    config = os.path.join(os.getcwd(), 'master.yml')
     with open(config, 'r') as f:
         app = Application.from_yaml(f)
 

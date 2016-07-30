@@ -5,6 +5,7 @@ VERSION = `cat version.txt | xargs`
 PACKAGE = docker-master
 IMAGE = mbodenhamer/${PACKAGE}-dev
 PYDEV = docker run --rm -it -e BE_UID=`id -u` -e BE_GID=`id -g` \
+	-v /var/run/docker.sock:/var/run/docker.sock \
 	-v $(CURDIR):/app $(IMAGE)
 VERSIONS = 2.7.11,3.4.4,3.5.1
 

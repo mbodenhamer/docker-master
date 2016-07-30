@@ -1,2 +1,2 @@
-docker-py
+docker-py<=1.8.1
 syn>=0.0.7

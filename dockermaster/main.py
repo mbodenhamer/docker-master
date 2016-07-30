@@ -443,7 +443,7 @@ class Application(object):
 
 #-------------------------------------------------------------------------------
 
-USAGE = '''python docker-master.py MODE [options] [arguments]
+USAGE = '''docker-master MODE [options] [arguments]
 '''
 
 def main(*args):

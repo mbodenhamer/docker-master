@@ -2,12 +2,17 @@ import os
 import sys
 import time
 import yaml
-import docker
 import socket
+import docker
 
 #-------------------------------------------------------------------------------
 
 client = docker.Client(base_url='unix://var/run/docker.sock')
+
+# Ignore the ugly monkeypatch...
+# Will be removed in the next release
+if client._version > '1.21':
+    client._version = '1.21'
 
 #-------------------------------------------------------------------------------
 
@@ -128,11 +133,7 @@ class Container(object):
         return ret
 
     def _poll(self, cname, port):
-        # Make it work ...
-        ver = client._version
-        client._version = '1.21'
         caddr = client.inspect_container(cname)['NetworkSettings']['IPAddress']
-        client._version = ver
 
         sock = socket.socket()
         while True:
@@ -431,23 +432,14 @@ class Application(object):
 
     def bash(self, name, opts=''):
         cname = self.aliases[name]
-        cmd = 'docker exec -it {} /bin/bash {}'.format(cname, opts)
+        cmd = 'docker exec -it {} /bin/bash -c "{}"'.format(cname, opts)
         os.system(cmd)
 
     def shell(self, name, opts=''):
         con = self.aliasmap[name]
-        cmd = 'docker exec -it {} {} {}'.format(con.full_name, con.shell, opts)
+        cmd = 'docker exec -it {} {} -c "{}"'.format(con.full_name, con.shell, opts)
         os.system(cmd)
 
-
-#-------------------------------------------------------------------------------
-
-def rmvols(opts=''):
-    vols = client.volumes().get('Volumes', [])
-    for vol in vols:
-        name = vol['Name']
-        cmd = 'docker volume rm {}'.format(name)
-        os.system(cmd)
 
 #-------------------------------------------------------------------------------
 
@@ -461,9 +453,6 @@ def main(*args):
 
     mode = args[0]
     opts = ' '.join(args[1:])
-    if mode == 'rmvols':
-        rmvols(opts)
-        sys.exit(0)
 
     config = os.path.join(os.getcwd(), 'master.yml')
     with open(config, 'r') as f:

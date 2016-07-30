@@ -15,6 +15,10 @@ services:
     volumes_from:
       - data
     restart: unless-stopped
+    expose:
+      - 5001
+    ports:
+      - 5002:5002
     start:
       order: 1
     scan:
@@ -27,9 +31,13 @@ services:
       - echo:echo
     start:
       order: 2
+      wait: 0.05
       poll:
         - echo:5002
 
   sa:
     image: mbodenhamer/alpine-data
     standalone: yes
+    command:
+      - ls
+      - "/"

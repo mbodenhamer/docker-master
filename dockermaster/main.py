@@ -446,7 +446,7 @@ class Application(object):
 USAGE = '''docker-master MODE [options] [arguments]
 '''
 
-def main(*args):
+def _main(*args):
     if not args:
         print(USAGE)
         sys.exit(1)
@@ -501,9 +501,11 @@ def main(*args):
         app.run(name, opts)
     elif mode == 'down':
         app.rm(name, opts)
+    elif mode == 'validate':
+        print('Validation successful')
     else:
         print(USAGE)
         sys.exit(1)
 
-if __name__ == '__main__': # pragma: no cover
-    main(*sys.argv[1:])
+def main():
+    _main(*sys.argv[1:])

@@ -1,6 +1,6 @@
 import os
 from shlex import shlex
-from dockermaster.main import main
+from dockermaster.main import _main
 
 from docker import Client
 cli = Client(base_url='unix://var/run/docker.sock')
@@ -13,7 +13,7 @@ APP1 = os.path.join(DIR, 'app1')
 
 def test_main_app1():
     def invoke(cmd):
-        main(*shlex(cmd))
+        _main(*shlex(cmd))
 
     os.chdir(APP1)
     invoke('setup')

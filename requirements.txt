@@ -4,13 +4,16 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
-backports.ssl-match-hostname==3.5.0.1  # via docker-py
-docker-py
-ipaddress==1.0.16         # via docker-py
-Jinja2==2.8               # via syn
-MarkupSafe==0.23          # via jinja2
-PyYAML==3.11              # via syn
-requests==2.10.0          # via docker-py
-six==1.10.0               # via docker-py, syn, websocket-client
+certifi==2019.9.11        # via requests
+chardet==3.0.4            # via requests
+docker-py==1.10.6
+docker-pycreds==0.4.0     # via docker-py
+idna==2.7                 # via requests
+jinja2==2.8               # via syn
+markupsafe==0.23          # via jinja2
+pyyaml==3.11              # via syn
+requests==2.20.0          # via docker-py
+six==1.10.0               # via docker-py, docker-pycreds, syn, websocket-client
 syn==0.0.7
+urllib3==1.24.3           # via requests
 websocket-client==0.37.0  # via docker-py
